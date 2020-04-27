@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<alloy>
+
+<view>
+
+<defaultnode/>
+
+<defaultedge/>
+
+<node>
+   <type name="Int"/>
+   <type name="String"/>
+   <type name="seq/Int"/>
+</node>
+
+<node color="White">
+   <type name="univ"/>
+</node>
+
+<node label="bottom">
+   <set name="$s&apos;" type="Set"/>
+</node>
+
+<node label="top">
+   <set name="$s" type="Set"/>
+</node>
+
+<node numberatoms="no" label="">
+   <type name="Set"/>
+</node>
+
+<node visible="no" label="">
+   <type name="Atom"/>
+</node>
+
+<edge label="sub">
+   <relation name="subsets"> <type name="Set"/> <type name="Set"/> </relation>
+</edge>
+
+<edge visible="no" attribute="yes" label="">
+   <relation name="atoms"> <type name="Set"/> <type name="Atom"/> </relation>
+</edge>
+
+</view>
+
+</alloy>
