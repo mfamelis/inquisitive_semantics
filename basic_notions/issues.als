@@ -98,7 +98,7 @@ fun mostInquisitiveIssue [s: InformationState] : one Issue {
 // Shows the most inquisitive issue for states that are not necessarily the ignorant state
 run showMostInquisitiveIssue {
 	some state : InformationState, i : Issue | i=mostInquisitiveIssue[state]
-} for 20 but exactly 3 PossibleWorld, exactly 1 Issue
+} for 20 but exactly 4 PossibleWorld, exactly 1 Issue
 
 // If a most inquisitive issue is over a state that is not {w} or {empty} 
 // then that state should not resolve it
@@ -110,6 +110,33 @@ check complexStateOverWhichMostInquisitiveIssueIsDefinedDoesNotResolveIt {
 		)
 } for 20 but exactly 4 PossibleWorld, exactly 1 Issue //seems legit
 
-/* TODO:
-Alternatives in an issue (prob a function)
-*/
+// The alternatives of an issue are its maximal elements
+// A maximal element of an Issue i is a state s that resolves it and
+// it is not a proper enhancement of any other state that also resolves it
+fun alternatives[i : Issue] : set InformationState {
+	{alt : InformationState | 
+		resolves[alt,i] and 
+		no other : InformationState | 
+			isProperEnhancement[alt,other] and resolves[other,i]
+	}
+}
+
+// If an issue over a state is trivial, it has exactly one alternative: the state
+check trivialIssuesHaveExactlyOneAlternative{
+	all q:InformationState, i:Issue|
+		trivialIssue[i,q] implies q=alternatives[i]
+} for 20 but exactly 4 PossibleWorld, exactly 1 Issue //seems legit
+
+// An issue is called proper if it has more than one alternative
+pred proper[i : Issue]{
+	#alternatives[i]>1
+}
+// Good way to visualize the alternatives[] pred using the evaluator
+run proper for 20 but exactly 4 PossibleWorld, exactly 1 Issue
+
+// A proper issue is not trivial
+check properIssueIsNonTrivial{
+	all q:InformationState, i:Issue|
+		(over[i,q] and proper[i]) implies (not trivialIssue[i,q])
+} for 20 but exactly 4 PossibleWorld, exactly 1 Issue //seems legit
+
