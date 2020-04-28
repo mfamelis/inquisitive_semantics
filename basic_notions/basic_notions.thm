@@ -8,7 +8,6 @@
 <defaultedge/>
 
 <node>
-   <type name="InformationState"/>
    <type name="Int"/>
    <type name="String"/>
    <type name="seq/Int"/>
@@ -18,20 +17,36 @@
    <type name="univ"/>
 </node>
 
+<node label="S">
+   <type name="information_states/InformationState"/>
+</node>
+
 <node label="bottom">
-   <set name="$show_s&apos;" type="InformationState"/>
+   <set name="$showIssues_s&apos;&apos;" type="information_states/InformationState"/>
 </node>
 
 <node label="top">
-   <set name="$show_s" type="InformationState"/>
+   <set name="$showIssues_s&apos;" type="information_states/InformationState"/>
 </node>
 
-<node shape="Circle" label="">
-   <type name="PossibleWorld"/>
+<node shape="Egg" color="Blue">
+   <type name="Issue"/>
+</node>
+
+<node visible="no" label="">
+   <type name="information_states/PossibleWorld"/>
 </node>
 
 <edge attribute="yes">
-   <relation name="worlds"> <type name="InformationState"/> <type name="PossibleWorld"/> </relation>
+   <relation name="worlds"> <type name="information_states/InformationState"/> <type name="information_states/PossibleWorld"/> </relation>
+</edge>
+
+<edge color="Gray">
+   <relation name="enhances"> <type name="information_states/InformationState"/> <type name="information_states/InformationState"/> </relation>
+</edge>
+
+<edge visible="no">
+   <relation name="$showIssues_s"> <type name="Issue"/> <type name="information_states/InformationState"/> </relation>
 </edge>
 
 </view>
