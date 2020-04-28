@@ -98,6 +98,7 @@ run showRefinement {
 	some i,j:Issue|refines[i,j] and not i=j
 } for 10 but exactly 3 PossibleWorld, exactly 2 Issue
 
+//--------------------------------------------------------------------------------
 
 fun leastInquisitiveIssue [s: InformationState] : one Issue {
 	{i : Issue | trivialIssue[i,s]}
@@ -128,6 +129,8 @@ check complexStateOverWhichMostInquisitiveIssueIsDefinedDoesNotResolveIt {
 			inconsistentState[state] or (#state.worlds=1)
 		)
 } for 20 but exactly 4 PossibleWorld, exactly 1 Issue //seems legit
+
+//--------------------------------------------------------------------------------
 
 // The alternatives of an issue are its maximal elements
 // A maximal element of an Issue i is a state s that resolves it and
