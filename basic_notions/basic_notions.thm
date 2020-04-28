@@ -3,16 +3,13 @@
 
 <view>
 
-<projection> <type name="Lattice"/> </projection>
-
 <defaultnode/>
 
 <defaultedge/>
 
 <node>
+   <type name="InformationState"/>
    <type name="Int"/>
-   <type name="Lattice"/>
-   <type name="State"/>
    <type name="String"/>
    <type name="seq/Int"/>
 </node>
@@ -21,21 +18,20 @@
    <type name="univ"/>
 </node>
 
+<node label="bottom">
+   <set name="$show_s&apos;" type="InformationState"/>
+</node>
+
+<node label="top">
+   <set name="$show_s" type="InformationState"/>
+</node>
+
 <node shape="Circle" label="">
-   <type name="World"/>
+   <type name="PossibleWorld"/>
 </node>
 
-<node showlabel="no">
-   <set name="$completeState" type="State"/>
-   <set name="$emptyState" type="State"/>
-</node>
-
-<edge color="Black" style="Dashed">
-   <relation name="enhances"> <type name="State"/> <type name="State"/> </relation>
-</edge>
-
-<edge color="Gray">
-   <relation name="worlds"> <type name="State"/> <type name="World"/> </relation>
+<edge attribute="yes">
+   <relation name="worlds"> <type name="InformationState"/> <type name="PossibleWorld"/> </relation>
 </edge>
 
 </view>
