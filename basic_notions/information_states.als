@@ -45,6 +45,14 @@ fact enhancementIsAPartialOrder { //uses predicate from util/relation
 	partialOrder[enhances,InformationState]
 }
 
+pred isProperEnhancement(t,s : InformationState){
+	enhances[t,s] and not (t=s)
+}
+run showProperEnhancement{
+	some q,t : InformationState | isProperEnhancement[t,q]
+} for 10 but exactly 3 PossibleWorld
+
 pred showInformationStates {}
 
-run showInformationStates for 10 but exactly 3 PossibleWorld
+run showInformationStates 
+	for 10 but exactly 3 PossibleWorld
