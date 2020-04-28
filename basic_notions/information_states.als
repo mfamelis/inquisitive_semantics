@@ -1,4 +1,18 @@
 module information_states
+/*
+
+Signatures:
+- PossibleWorld
+- InformationState
+
+Predicates:
+- discards(s : InformationState, w : PossibleWorld)
+- ignorantState(s: InformationState)
+- inconsistentState(s: InformationState)
+- enhances(t,s : InformationState)
+- isProperEnhancement(t,s : InformationState)
+
+*/
 
 open util/relation
 

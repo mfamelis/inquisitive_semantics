@@ -1,4 +1,23 @@
 module issues
+/*
+
+Signatures:
+- Issue
+
+Predicates:
+- resolves (s : InformationState, i : Issue)
+- over (i : Issue, s : InformationState)
+- trivialIssue (i : Issue, state: InformationState)
+- refines [i,j : Issue]
+- proper [i : Issue]
+
+Functions:
+- UnionIssueState [i : Issue] : one InformationState
+- leastInquisitiveIssue [s: InformationState] : one Issue 
+- mostInquisitiveIssue [s: InformationState] : one Issue
+- alternatives [i : Issue] : set InformationState 
+
+*/
 
 open information_states
 
@@ -8,7 +27,7 @@ sig Issue {
 	states : set InformationState
 }
 
-pred resolves(s : InformationState, i : Issue){
+pred resolves (s : InformationState, i : Issue){
 	s in i.states
 }
 
@@ -54,7 +73,7 @@ run overEntireSpace {
 } for 20 but exactly 4 PossibleWorld, exactly 1 Issue // seems legit
 
 // The trivial issue over a state is resolved by anything in the state
-pred trivialIssue(i : Issue, state: InformationState){
+pred trivialIssue (i : Issue, state: InformationState){
 	resolves[state,i] and over[i,state]
 }
 
@@ -70,7 +89,7 @@ run trivialIssue for 20 but exactly 4 PossibleWorld, exactly 1 Issue // seems le
 //--------------------------------------------------------------------------------
 
 // An issue I can refine another issue J
-pred refines[i,j : Issue]{
+pred refines [i,j : Issue]{
 	(i.states in j.states) and (some s : InformationState | over[i,s] and over[j,s])
 }
 
@@ -113,7 +132,7 @@ check complexStateOverWhichMostInquisitiveIssueIsDefinedDoesNotResolveIt {
 // The alternatives of an issue are its maximal elements
 // A maximal element of an Issue i is a state s that resolves it and
 // it is not a proper enhancement of any other state that also resolves it
-fun alternatives[i : Issue] : set InformationState {
+fun alternatives [i : Issue] : set InformationState {
 	{alt : InformationState | 
 		resolves[alt,i] and 
 		no other : InformationState | 
@@ -128,7 +147,7 @@ check trivialIssuesHaveExactlyOneAlternative{
 } for 20 but exactly 4 PossibleWorld, exactly 1 Issue //seems legit
 
 // An issue is called proper if it has more than one alternative
-pred proper[i : Issue]{
+pred proper [i : Issue]{
 	#alternatives[i]>1
 }
 // Good way to visualize the alternatives[] pred using the evaluator
