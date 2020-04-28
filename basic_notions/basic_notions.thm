@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <alloy>
 
-<view>
+<view fontsize="14">
 
 <defaultnode/>
 
@@ -11,6 +11,13 @@
    <type name="Int"/>
    <type name="String"/>
    <type name="seq/Int"/>
+   <set name="$showMostInquisitiveIssue_i" type="Issue"/>
+   <set name="$showMostInquisitiveIssue_s&apos;" type="information_states/InformationState"/>
+   <set name="$showMostInquisitiveIssue_s&apos;&apos;" type="information_states/InformationState"/>
+</node>
+
+<node color="Red">
+   <set name="$showMostInquisitiveIssue_state" type="information_states/InformationState"/>
 </node>
 
 <node color="White">
@@ -19,14 +26,6 @@
 
 <node label="S">
    <type name="information_states/InformationState"/>
-</node>
-
-<node label="bottom">
-   <set name="$showIssues_s&apos;&apos;" type="information_states/InformationState"/>
-</node>
-
-<node label="top">
-   <set name="$showIssues_s&apos;" type="information_states/InformationState"/>
 </node>
 
 <node shape="Egg" color="Blue">
@@ -38,15 +37,12 @@
 </node>
 
 <edge attribute="yes">
+   <relation name="states"> <type name="Issue"/> <type name="information_states/InformationState"/> </relation>
    <relation name="worlds"> <type name="information_states/InformationState"/> <type name="information_states/PossibleWorld"/> </relation>
 </edge>
 
 <edge color="Gray">
    <relation name="enhances"> <type name="information_states/InformationState"/> <type name="information_states/InformationState"/> </relation>
-</edge>
-
-<edge visible="no">
-   <relation name="$showIssues_s"> <type name="Issue"/> <type name="information_states/InformationState"/> </relation>
 </edge>
 
 </view>

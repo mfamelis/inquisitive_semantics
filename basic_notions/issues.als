@@ -2,6 +2,8 @@ module issues
 
 open information_states
 
+//--------------------------------------------------------------------------------
+
 sig Issue {
 	states : set InformationState
 }
@@ -28,44 +30,86 @@ assert inconsistentInformationStateResolvesEveryIssue{
 }
 check inconsistentInformationStateResolvesEveryIssue for 20 // seems legit
 
-// Given an issue, the union Ui of all its elements contains exactly the information
-// that is necessary and sufficient to guarrantee that it can be truthfully resolved
-pred over (i : Issue, s : InformationState){
-	let Ui = i.states.worlds | Ui = s.worlds
+
+pred showIssues {}
+run showIssues for 10 but exactly 3 PossibleWorld, exactly 1 Issue
+
+//--------------------------------------------------------------------------------
+
+// Given an issue I, the state s := Ui, that is the union of all the elements in I 
+// contains exactly the information that is necessary and sufficient to guarrantee 
+// that it can be truthfully resolved
+fun UnionIssueState [i : Issue] : one InformationState {
+	{ s : InformationState | s.worlds=i.states.worlds }
 }
+// An issue I is over a state iff UI=s
+pred over (i : Issue, s : InformationState) {
+	UnionIssueState[i] = s
+}
+
 // It should follow that it is possible to create issues over the entire logical space
 run overEntireSpace {
 	some i : Issue | some s : InformationState |
 		over[i,s] and ignorantState[s]
 } for 20 but exactly 4 PossibleWorld, exactly 1 Issue // seems legit
-// The trivial issue is resolved by anything
-pred trivialIssue(i : Issue, s : InformationState){
-	resolves[s,i] and ignorantState[s]  
-	and over[i,s] // in reality this is superfluous
+
+// The trivial issue over a state is resolved by anything in the state
+pred trivialIssue(i : Issue, state: InformationState){
+	resolves[state,i] and over[i,state]
 }
+
+// The trivial issue over the ignorant state should be resolved by any state
+check theTrivialIssueOverTheIgnorantStateIsResolvedByAnything {
+	all i:Issue, s:InformationState|
+		(ignorantState[s] and trivialIssue[i,s]) implies (no q:InformationState | not resolves[q,i])
+} for 20 but exactly 3 PossibleWorld // seems legit
+
+// Shows trivial issues over states that are not necessarily the ignorant state
 run trivialIssue for 20 but exactly 4 PossibleWorld, exactly 1 Issue // seems legit
 
-pred showIssues {}
-run showIssues for 10 but exactly 3 PossibleWorld, exactly 1 Issue
+//--------------------------------------------------------------------------------
 
-// One issue can refine another
+// An issue I can refine another issue J
 pred refines[i,j : Issue]{
 	(i.states in j.states) and (some s : InformationState | over[i,s] and over[j,s])
 }
 
 run showRefinement {
+	// i refines j
 	some i,j:Issue|refines[i,j] and not i=j
 } for 10 but exactly 3 PossibleWorld, exactly 2 Issue
 
-/* TODO: 
-Running overEntireSpace produces an Issue that is over the entire space but does not
-contain the trivial issue.
-I want to verify that I am not allowed to compare/refine issues that are over 
-the same space but are incompatible.
-E.g. I={01,12} J={02,1}
-*/
+
+fun leastInquisitiveIssue [s: InformationState] : one Issue {
+	{i : Issue | trivialIssue[i,s]}
+}
+// Shows the least inquisitive state for states that are not the ignorant state
+run showLeastInquisitiveIssue {
+	some state : InformationState, i : Issue | not ignorantState[state] and i=leastInquisitiveIssue[state]
+} for 20 but exactly 4 PossibleWorld, exactly 1 Issue
+
+
+fun mostInquisitiveIssue [s: InformationState] : one Issue {
+	{i : Issue | over[i,s] and 
+		all t : InformationState | resolves[t,i] implies 
+			(#(t.worlds)=1 or inconsistentState[t]) 
+	}
+}
+// Shows the most inquisitive issue for states that are not necessarily the ignorant state
+run showMostInquisitiveIssue {
+	some state : InformationState, i : Issue | i=mostInquisitiveIssue[state]
+} for 20 but exactly 3 PossibleWorld, exactly 1 Issue
+
+// If a most inquisitive issue is over a state that is not {w} or {empty} 
+// then that state should not resolve it
+check complexStateOverWhichMostInquisitiveIssueIsDefinedDoesNotResolveIt {
+	all state:InformationState, i:Issue |
+		i=mostInquisitiveIssue[state] implies (
+			not resolves[state,i] or
+			inconsistentState[state] or (#state.worlds=1)
+		)
+} for 20 but exactly 4 PossibleWorld, exactly 1 Issue //seems legit
 
 /* TODO:
-Least and most inquisitive issues. (should these be functions taking states as params?)
 Alternatives in an issue (prob a function)
 */
