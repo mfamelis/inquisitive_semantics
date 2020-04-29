@@ -1,6 +1,12 @@
 module nedocsis
 /*
 
+This module defines a concept used often in inquisitive semantics. 
+The weird name "Nedocsis" is just an awkward acronym, it stands for a
+Non-Empty Downwards Closed Set of Information States.
+Issues, Propositions, and Contexts are all defined as Nedocsis,
+so the Nedocsis concept allows some degree of code reuse.
+
 Signatures:
 - Nedocsis
 
