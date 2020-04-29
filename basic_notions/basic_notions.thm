@@ -10,9 +10,10 @@
 <node>
    <type name="Int"/>
    <type name="String"/>
+   <type name="nedocsis/Nedocsis"/>
    <type name="seq/Int"/>
-   <set name="$showNedocsis_s" type="information_states/InformationState"/>
-   <set name="$showNedocsis_s&apos;" type="information_states/InformationState"/>
+   <set name="$showPropositions_s" type="information_states/InformationState"/>
+   <set name="$showPropositions_s&apos;" type="information_states/InformationState"/>
 </node>
 
 <node color="White">
@@ -27,9 +28,17 @@
    <type name="information_states/PossibleWorld"/>
 </node>
 
-<node shape="Lined Circle" color="Yellow">
-   <type name="Nedocsis"/>
+<node shape="Ellipse" color="Blue">
+   <type name="issues/Issue"/>
 </node>
+
+<node shape="Parallelogram" color="Blue">
+   <type name="Proposition"/>
+</node>
+
+<edge color="Blue" style="Bold" layout="no" attribute="yes">
+   <relation name="states"> <type name="nedocsis/Nedocsis"/> <type name="information_states/InformationState"/> </relation>
+</edge>
 
 <edge color="Gray" style="Dotted" visible="yes" attribute="yes">
    <relation name="worlds"> <type name="information_states/InformationState"/> <type name="information_states/PossibleWorld"/> </relation>
@@ -40,7 +49,7 @@
 </edge>
 
 <edge visible="no">
-   <relation name="$showNedocsis_q"> <type name="Nedocsis"/> <type name="information_states/InformationState"/> </relation>
+   <relation name="$showPropositions_q"> <type name="nedocsis/Nedocsis"/> <type name="information_states/InformationState"/> </relation>
 </edge>
 
 </view>
