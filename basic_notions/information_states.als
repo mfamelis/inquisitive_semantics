@@ -13,6 +13,9 @@ Predicates:
 - enhances(t,s : InformationState)
 - isProperEnhancement(t,s : InformationState)
 
+Functions:
+- singleWorldState [w:PossibleWorld] : one InformationState
+
 */
 
 open util/relation
@@ -66,6 +69,12 @@ pred isProperEnhancement(t,s : InformationState){
 run showProperEnhancement{
 	some q,t : InformationState | isProperEnhancement[t,q]
 } for 10 but exactly 3 PossibleWorld
+
+// get a state that contains exactly a single possible world
+// i.e., get the state {w}
+fun singleWorldState [w:PossibleWorld] : one InformationState {
+	{q: InformationState | q.worlds=w}
+}
 
 pred showInformationStates {}
 
