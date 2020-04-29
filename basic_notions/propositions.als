@@ -7,6 +7,8 @@ Signatures:
 
 Predicates:
 - embodied [i : Issue, p : Proposition]
+- trueIn [p: Proposition, w: PossibleWorld]
+- supports[q: InformationState, p: Proposition]
 
 Functions:
 - info [p : Proposition] : one InformationState
@@ -52,3 +54,32 @@ check theEmbodiedIssueIsOverTheInfo {
 } for 20 but exactly 4 PossibleWorld // seems legit
 
 //--------------------------------------------------------------------------------
+
+pred trueIn [p: Proposition, w: PossibleWorld] {
+ not discards[info[p],w]
+}
+
+pred supports[q: InformationState, p: Proposition]{
+	isIn[q,p]
+}
+
+check TruthAndSupport {
+	all w:PossibleWorld, p:Proposition|
+		let sw = singleWorldState[w] | // function from information_states
+			trueIn[p,w] iff supports[sw,p]
+} for 10 but exactly 3 PossibleWorld, exactly 1 Proposition, exactly 1 Issue
+
+//--------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+

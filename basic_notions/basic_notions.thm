@@ -10,10 +10,16 @@
 <node>
    <type name="Int"/>
    <type name="String"/>
-   <type name="nedocsis/Nedocsis"/>
    <type name="seq/Int"/>
-   <set name="$showPropositions_s" type="information_states/InformationState"/>
-   <set name="$showPropositions_s&apos;" type="information_states/InformationState"/>
+   <set name="$trueIn_p" type="Proposition"/>
+   <set name="$trueIn_q&apos;" type="information_states/InformationState"/>
+   <set name="$trueIn_s" type="information_states/InformationState"/>
+   <set name="$trueIn_s&apos;" type="information_states/InformationState"/>
+   <set name="$trueIn_w" type="information_states/PossibleWorld"/>
+</node>
+
+<node color="Blue">
+   <type name="nedocsis/Nedocsis"/>
 </node>
 
 <node color="White">
@@ -28,15 +34,15 @@
    <type name="information_states/PossibleWorld"/>
 </node>
 
-<node shape="Ellipse" color="Blue">
+<node shape="Ellipse">
    <type name="issues/Issue"/>
 </node>
 
-<node shape="Parallelogram" color="Blue">
+<node shape="Parallelogram">
    <type name="Proposition"/>
 </node>
 
-<edge color="Blue" style="Bold" layout="no" attribute="yes">
+<edge color="Blue" style="Solid" layout="no" attribute="yes">
    <relation name="states"> <type name="nedocsis/Nedocsis"/> <type name="information_states/InformationState"/> </relation>
 </edge>
 
@@ -46,10 +52,6 @@
 
 <edge color="Gray" style="Solid">
    <relation name="enhances"> <type name="information_states/InformationState"/> <type name="information_states/InformationState"/> </relation>
-</edge>
-
-<edge visible="no">
-   <relation name="$showPropositions_q"> <type name="nedocsis/Nedocsis"/> <type name="information_states/InformationState"/> </relation>
 </edge>
 
 </view>
