@@ -20,34 +20,16 @@ Functions:
 */
 
 open information_states
+open nedocsis
 
 //--------------------------------------------------------------------------------
 
-sig Issue {
-	states : set InformationState
-}
+// An Issue is a Non-Empty Downwards Closed Set of Information States (NEDOCSIS)
+sig Issue extends Nedocsis {}
 
-pred resolves (s : InformationState, i : Issue){
-	s in i.states
+pred resolves (q : InformationState, i : Issue){
+	isIn[q,i]
 }
-
-// An issue is a non-empty, downward closed set of information states
-fact issuesNonEmpty {
-	all i : Issue | some s : InformationState | resolves[s,i]
-}
-fact issuesAreDownwardClosed{
-	// If (s resolves I) and (t enhances s), then (t resolves I), too
-	all i : Issue | all s : InformationState | 
-		resolves[s,i] implies 
-		all t : InformationState | enhances[t,s] implies resolves[t,i]
-}
-
-// It should follow that the inconsistent state (bottom) resolves every issue
-assert inconsistentInformationStateResolvesEveryIssue{
-	all i : Issue | all s : InformationState |
-		inconsistentState[s] implies resolves[s,i]
-}
-check inconsistentInformationStateResolvesEveryIssue for 20 // seems legit
 
 
 pred showIssues {}
