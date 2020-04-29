@@ -24,6 +24,7 @@ abstract sig Nedocsis {
 
 pred isIn (q : InformationState, n : Nedocsis){
 	q in n.states
+}
 
 fact NonEmpty {
 	all n : Nedocsis | some q : InformationState | isIn[q,n]
