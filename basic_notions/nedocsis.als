@@ -1,4 +1,13 @@
 module nedocsis
+/*
+
+Signatures:
+- Nedocsis
+
+Predicates:
+- isIn (q : InformationState, n : Nedocsis)
+
+*/
 
 open information_states
 
