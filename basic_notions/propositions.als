@@ -9,6 +9,8 @@ Predicates:
 - embodied [i : Issue, p : Proposition]
 - trueIn [p: Proposition, w: PossibleWorld]
 - supports[q: InformationState, p: Proposition]
+- isInformative [p : Proposition]
+- isInquisitive [p : Proposition]
 
 Functions:
 - info [p : Proposition] : one InformationState
@@ -71,6 +73,13 @@ check TruthAndSupport {
 
 //--------------------------------------------------------------------------------
 
+pred isInformative [p : Proposition] {
+	not ignorantState[info[p]]
+}
+
+pred isInquisitive [p : Proposition] {
+	not isIn[info[p],p]
+}
 
 
 
