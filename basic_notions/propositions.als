@@ -1,5 +1,6 @@
 module propositions
 /*
+Michalis Famelis famelis@iro.umontreal.ca
 
 Signatures:
 - Proposition
@@ -38,16 +39,16 @@ pred embodied [i : Issue, p : Proposition] {
 A simple way to see that the definitions above work is to open the evaluator and compare
 the results for:
 {k:Issue|embodied[k,Proposition$0]}
-alternatives[issues/Issue$1]
+alternatives[issues/Issue$0]
 info[Proposition$0] 
 */
 run showPropositions {
 	all p:Proposition| some i:Issue | embodied[i,p] and proper[i]
 } 
-for 10 but exactly 3 PossibleWorld, exactly 1 Proposition, exactly 2 Issue
+for 10 but exactly 3 PossibleWorld, exactly 1 Proposition, exactly 1 Issue
 
 check theEmbodiedIssueIsOverTheInfo {
 	all p:Proposition, i:Issue | embodied[i,p] implies over[i,info[p]]
-} for 20 but exactly 3 PossibleWorld // seems legit
+} for 20 but exactly 4 PossibleWorld // seems legit
 
 //--------------------------------------------------------------------------------

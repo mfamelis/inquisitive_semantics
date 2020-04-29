@@ -1,11 +1,13 @@
 module nedocsis
 /*
+Michalis Famelis famelis@iro.umontreal.ca
 
 This module defines a concept used often in inquisitive semantics. 
 The weird name "Nedocsis" is just an awkward acronym, it stands for a
 Non-Empty DOwnwards Closed Set of Information States.
 Issues, Propositions, and Contexts are all defined as Nedocsis,
-so the Nedocsis concept allows some degree of code reuse.
+so the nedocsis module allows some degree of code reuse across all 
+of them.
 
 Signatures:
 - Nedocsis

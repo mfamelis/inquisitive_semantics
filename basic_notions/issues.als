@@ -1,5 +1,6 @@
 module issues
 /*
+Michalis Famelis famelis@iro.umontreal.ca
 
 Signatures:
 - Issue

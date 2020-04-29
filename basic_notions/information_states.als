@@ -1,5 +1,6 @@
 module information_states
 /*
+Michalis Famelis famelis@iro.umontreal.ca
 
 Signatures:
 - PossibleWorld
