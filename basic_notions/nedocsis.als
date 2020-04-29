@@ -1,4 +1,4 @@
-module abstracts
+module nedocsis
 
 open information_states
 
