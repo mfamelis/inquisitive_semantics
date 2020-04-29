@@ -5,8 +5,10 @@ Signatures:
 - Proposition
 
 Predicates:
+- embodied [i : Issue, p : Proposition]
 
 Functions:
+- info [p : Proposition] : one InformationState
 
 */
 
@@ -25,6 +27,8 @@ fun info [p : Proposition] : one InformationState {
 }
 
 // An issue embodied by a proposition is one that is resolved in a state q iff q in P
+// (Making this a predicate and not a function means that the existence of a proposition
+// object does not necessitate the existence of an issue object)
 pred embodied [i : Issue, p : Proposition] {
 	all q : InformationState |
 		resolves[q,i] iff isIn[q,p]	
