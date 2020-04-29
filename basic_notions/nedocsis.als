@@ -13,6 +13,9 @@ Signatures:
 Predicates:
 - isIn (q : InformationState, n : Nedocsis)
 
+Functions:
+- union [i : Nedocsis] : one InformationState
+
 */
 
 open information_states
@@ -44,6 +47,12 @@ assert inconsistentInformationStateisInEveryNedocsis{
 }
 check inconsistentInformationStateisInEveryNedocsis for 20 // seems legit
 
+// Union was first defined for Issues, but it applies to all Nedocsis.
+// Given a Nedocsis n, this function returns a state s:=Un that is 
+// the union of all the elements in n.
+fun union [n : Nedocsis] : one InformationState {
+	{ s : InformationState | s.worlds=n.states.worlds }
+}
 
 pred showNedocsis {}
 run showNedocsis for 10 

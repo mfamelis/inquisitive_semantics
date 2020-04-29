@@ -12,7 +12,6 @@ Predicates:
 - proper [i : Issue]
 
 Functions:
-- union [i : Issue] : one InformationState
 - leastInquisitiveIssue [s: InformationState] : one Issue 
 - mostInquisitiveIssue [s: InformationState] : one Issue
 - alternatives [i : Issue] : set InformationState 
@@ -31,21 +30,17 @@ pred resolves (q : InformationState, i : Issue){
 	isIn[q,i]
 }
 
-
 pred showIssues {}
 run showIssues for 10 but exactly 3 PossibleWorld, exactly 1 Issue
 
 //--------------------------------------------------------------------------------
 
+// An issue I is over a state iff UI=s
 // Given an issue I, the state s := Ui, that is the union of all the elements in I 
 // contains exactly the information that is necessary and sufficient to guarrantee 
 // that it can be truthfully resolved
-fun union [i : Issue] : one InformationState {
-	{ s : InformationState | s.worlds=i.states.worlds }
-}
-// An issue I is over a state iff UI=s
 pred over (i : Issue, s : InformationState) {
-	union[i] = s
+	union[i] = s // uses the predicate union from nedocsis
 }
 
 // It should follow that it is possible to create issues over the entire logical space
